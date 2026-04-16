@@ -1,0 +1,4 @@
+# Protect template sources — changes require explicit review so a stray
+# push doesn't break downstream users' demos.
+/TEMPLATES/        @solo-io/agentregistry-maintainers
+/README.md         @solo-io/agentregistry-maintainers

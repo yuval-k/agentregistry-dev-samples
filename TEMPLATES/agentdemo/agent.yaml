@@ -1,0 +1,11 @@
+agentName: agentdemo
+version: 0.1.0
+framework: adk
+language: python
+modelProvider: gemini
+modelName: gemini-2.5-flash
+description: Dice-rolling sample ADK-Python agent.
+# Set this to a registry path you can push to, e.g.
+#   ghcr.io/<your-github-user>/agentdemo:0.1.0
+image: REPLACE_ME
+mcpServers: []

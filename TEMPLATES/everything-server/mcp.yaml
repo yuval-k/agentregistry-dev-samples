@@ -1,0 +1,8 @@
+mcpServerName: everything-server
+version: 0.1.0
+framework: fastmcp
+language: python
+description: Demo MCP server exposing echo, now, add, and reverse tools.
+# Set this to a registry path you can push to, e.g.
+#   ghcr.io/<your-github-user>/everything-server:0.1.0
+image: REPLACE_ME
