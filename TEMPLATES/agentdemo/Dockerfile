@@ -1,5 +1,5 @@
 ARG DOCKER_REGISTRY=ghcr.io
-ARG VERSION=v0.8.0-beta6
+ARG VERSION=0.8.0-beta6
 FROM $DOCKER_REGISTRY/kagent-dev/kagent/kagent-adk:$VERSION
 
 WORKDIR /app
