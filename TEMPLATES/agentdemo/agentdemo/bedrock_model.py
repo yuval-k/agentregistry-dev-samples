@@ -101,8 +101,6 @@ def _tools_param(llm_request: LlmRequest) -> list[dict]:
             schema["type"] = "object"
             if "properties" not in schema:
                 schema["properties"] = {}
-            import logging
-            logging.getLogger("bedrock_model").info("Tool %s schema: %s", fn.name, json.dumps(schema))
             out.append(
                 {
                     "name": fn.name,
