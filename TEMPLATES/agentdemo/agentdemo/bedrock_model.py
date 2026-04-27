@@ -64,6 +64,24 @@ def _contents_to_messages(contents: list[types.Content]) -> list[dict]:
     return messages
 
 
+_JSON_SCHEMA_KEYS = {"type", "properties", "required", "description", "items", "enum",
+                     "const", "default", "anyOf", "oneOf", "allOf", "not", "if", "then",
+                     "else", "minimum", "maximum", "minLength", "maxLength", "pattern",
+                     "minItems", "maxItems", "uniqueItems", "additionalProperties",
+                     "$ref", "$defs", "format", "title"}
+
+
+def _clean_schema(schema: dict) -> dict:
+    """Strip non-JSON-Schema keys that ADK's model_dump may emit."""
+    cleaned = {k: v for k, v in schema.items() if k in _JSON_SCHEMA_KEYS}
+    if "properties" in cleaned:
+        cleaned["properties"] = {
+            k: _clean_schema(v) if isinstance(v, dict) else v
+            for k, v in cleaned["properties"].items()
+        }
+    return cleaned
+
+
 def _tools_param(llm_request: LlmRequest) -> list[dict]:
     """Extract Anthropic-shaped tool definitions from the request config."""
     cfg_tools = (llm_request.config.tools if llm_request.config else None) or []
@@ -75,9 +93,12 @@ def _tools_param(llm_request: LlmRequest) -> list[dict]:
                 if fn.parameters
                 else {}
             )
+            schema = _clean_schema(schema)
             schema["type"] = "object"
             if "properties" not in schema:
                 schema["properties"] = {}
+            import logging
+            logging.getLogger("bedrock_model").info("Tool %s schema: %s", fn.name, json.dumps(schema))
             out.append(
                 {
                     "name": fn.name,
