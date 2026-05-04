@@ -4,13 +4,6 @@ from fastmcp import FastMCP
 
 mcp = FastMCP("everything-server")
 
-
-@mcp.tool()
-def echo(text: str) -> str:
-    """Return the input string unchanged."""
-    return text
-
-
 @mcp.tool()
 def now() -> str:
     """Return the current UTC time in ISO-8601 format."""
